@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width-device-width, initial-scale-1.0">
+    <title>Personality Predictor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Upload.css') }}">
+</head>
+
+<body onload="flashMessage()">
+    <header>
+        <a class="brand" style="color: white;" >JobSearch</a>
+        <nav>
+           <ul>
+                {% if session['user_role'] == 'admin'%}
+                    <li><a href="{{url_for('intro_admin')}}">Introduction</a></li>
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                {% else %}
+                    <li><a href="{{url_for('intro_student')}}">Introduction</a></li>
+
+                {% endif %}
+                <li><a href="{{url_for('upload')}}">Upload</a></li>
+           </ul> 
+        </nav>
+    </header>
+
+    <script>
+        function flashMessage() {
+            if ("{{ flash_message }}" == "True") {
+            alert("Please upload a file");
+            }
+        }
+    </script>
+<div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                
+                <h5 class="modal-title" id="exampleModalCenterTitle">Resume uploaded successfully</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+                </div>
+                <div class="modal-body">
+                    Would you like to upload additional certificates to the system?                        
+                </div>
+                {% if candidateID  %}
+                    <div class="modal-footer">
+                        <button type="button" onclick="confirm()" id="return_home_btn" class="btn btn-primary">Yes</button>
+                        <a href="{{url_for('home',message='As13#s12',candidate_id=candidateID)}}"><button  id="downloadBtn" type="button" class="btn btn-secondary">No</button></a>
+                    </div>
+                {% else %}
+                    <div class="modal-footer">
+                        <a href="{{url_for('home')}}"><button  id="downloadBtn" type="button" class="btn btn-secondary">No</button></a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="wrapper">
+        <div id="title" style="padding-bottom: 0.5em;">Certificate Uploader</div>
+        <label style="color: red; text-align: justify;">Please note that we recommend uploading files (.pdf, .jpeg, .png, .jpg) with a size lower than 150 MB to ensure faster processing time.</label>
+        
+        <!-- onsubmit="return validateForm()" -->
+        <form id="form" action="/certificate_upload" name="formUpload"  method="post" enctype="multipart/form-data">
+            <!-- onchange="selectedVideo(this);" -->
+            <input id="file" type="file" name="file" class="file-input" hidden multiple>
+            <input id="candidate_id" type="text" name="candidate_id" class="file-input" hidden value="{{candidateID}}">
+
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Browse File to Upload</p>
+            
+            <input id="browseBtn" class="upload" type="button" value="Browse">
+            
+        </form>
+        <div id="submitBtnWrapper">
+            <!-- <input class="submit" id="submit-btn" form="form" type="button" value="Upload"> -->
+
+            <input class="submit" form="form" type="submit" value="Upload">
+        </div>
+
+        <!-- <section class="progress-area">
+            <li class="row">
+                <i class="fas fa-file-alt"></i>
+                <div class="content">
+                    <div class="details">
+                        <span class="name">image_01.png . Uploading</span>
+                        <span class="percent">50%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </li>
+        </section> -->
+        <section class="upload-area" id="fileUploaded"  >
+
+        </section>
+        <!-- <video autoplay id="video" controls>
+            <source id="source" type="video/mp4">
+        </video> -->
+    </div>
+    <script src="{{ url_for('static', filename='script/certificate.js') }}"></script>
+
+</body>
+
+</html>
+
+    

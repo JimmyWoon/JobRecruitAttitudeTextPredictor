@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--=============== REMIXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!--=============== CSS ===============-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Login.css') }}">
+
+    <title>Login</title>
+</head>
+<!-- <header>
+    <a class="brand" style="color: white;" >JobSearch</a>
+    <nav>
+       <ul>
+            {% if session['user_role'] == 'admin'%}
+                <li><a href="{{url_for('intro_admin')}}">Introduction</a></li>
+                <li><a href="{{url_for('login')}}">Home</a></li>
+            {% else %}
+                <li><a href="{{url_for('intro_student')}}">Introduction</a></li>
+
+            {% endif %}
+            <li><a href="{{url_for('upload')}}">Upload</a></li>
+       </ul> 
+    </nav>
+ </header> -->
+<body>
+
+    <section class="container">
+        <div class="loginContent">
+            <!-- <img src="static\image\background.jpg" alt="login image" class="loginImg"> -->
+
+            <form action="/login" method="POST" class="loginForm">
+                <div>
+                    <h1 class="loginTitle">
+                        <span>Welcome</span> Back
+                    </h1>
+                    <p class="loginDescription">
+                        Welcome! Please login to continue.
+                    </p>
+                </div>
+                {% if session['login_status'] == 'fail'%}
+                    <div class="error">
+                        <p>
+                            Login fail
+                        </p>
+                    </div>
+                {% elif session['login_status'] == 'success' %}
+                {% endif %}
+                <div>
+                    <div class="loginInputs">
+                        <div>
+                            <label for="" class="loginLabel">Passcode</label>
+                            <input type="text" name="passcode"  placeholder="Enter passcode" class="loginInput">
+                        </div>
+
+                        <div>
+                            <label for="" class="loginLabel">Password</label>
+                            <div class="loginBox">
+                                <input type="password" name="password" placeholder="Enter password" class="loginInput" id="inputPass">
+                                <i class="ri-eye-off-line loginEye" id="inputIcon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="loginButtons">
+                        <button type="submit" name="submit" class="loginButton">Log In</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script src="{{ url_for('static', filename='script/login.js') }}"></script>
+
+</body>
+</html>
+

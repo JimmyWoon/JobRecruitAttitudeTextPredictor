@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width-device-width, initial-scale-1.0">
+    <title>Personality Predictor</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Upload.css') }}">
+
+</head>
+<header>
+    <a class="brand" style="color: white;" >JobSearch</a>
+    <nav>
+       <ul>
+            {% if session['user_role'] == 'admin'%}
+                <li><a href="{{url_for('intro_admin')}}">Introduction</a></li>
+                <li><a href="{{url_for('home')}}">Home</a></li>
+            {% else %}
+                <li><a href="{{url_for('intro_student')}}">Introduction</a></li>
+
+            {% endif %}
+            <li><a href="{{url_for('upload')}}">Upload</a></li>
+       </ul> 
+    </nav>
+</header>
+
+<body onload="flashMessage()">
+    
+    <script>
+        function flashMessage() {
+            if ("{{ flash_message }}" == "True") {
+                alert("Please upload a file");
+            }
+            else if ("{{ flash_message }}" == "No certificate selected") {
+                alert("No certificate selected");
+            }
+        }
+    </script>
+
+    <div class="wrapper">
+        <div id="title" style="padding-bottom: 0.5em;">Resume Uploader</div>
+        <label style="color: red; text-align: justify;">Please note that we recommend uploading files (.pdf, .docx, .doc, .mp4) with a size lower than 150 MB to ensure faster processing time.</label>
+
+        <!-- onsubmit="return validateForm()" -->
+        <form id="form" action="/upload" name="formUpload"  method="post" enctype="multipart/form-data">
+            <!-- onchange="selectedVideo(this);" -->
+            <input id="file" type="file" name="file" class="file-input" hidden multiple>
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Browse File to Upload</p>
+            
+            <input id="browseBtn" class="upload" type="button" value="Browse">
+            <div id="information_form">
+                <h3 >Candidate Information</h3>
+                <div class="form-group row information_form_row">
+                  <label for="inputName" class="col-sm-2 col-form-label">Name<label id="error1" class="alert_star_hide">*</label></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="inputName" class="form-control-plaintext" id="inputName" placeholder="Name" >
+                  </div>
+                </div>
+                <div class="form-group row information_form_row">
+                  <label for="inputPhone" class="col-sm-2 col-form-label">Phone<label id="error2" class="alert_star_hide">*</label></label>
+                  <div class="col-sm-10">
+                    <input  type="text" name="inputPhone" class="form-control" id="inputPhone" placeholder="Phone Number">
+                  </div>
+                </div>
+                <!-- <div class="form-group row information_form_row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="inputEmail" class="form-control" id="inputEmail" placeholder="Email">
+                    </div>
+                </div> -->
+                <div id="submitBtnWrapper">
+                    <input onclick="checkRequired();" class="submit" type="button" value="Submit">
+                </div>
+            </div>
+        </form>
+        <div id="submitBtnWrapper">
+            <!-- <input class="submit" id="submit-btn" form="form" type="button" value="Upload"> -->
+
+            <input class="submit" onclick="submitForms()" form="form" type="submit" value="Upload">
+        </div>
+
+        <!-- <section class="progress-area">
+            <li class="row">
+                <i class="fas fa-file-alt"></i>
+                <div class="content">
+                    <div class="details">
+                        <span class="name">image_01.png . Uploading</span>
+                        <span class="percent">50%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </li>
+        </section> -->
+        <section class="upload-area" id="fileUploaded"  >
+
+        </section>
+        <!-- <video autoplay id="video" controls>
+            <source id="source" type="video/mp4">
+        </video> -->
+    </div>
+
+
+    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+</body>
+
+</html>

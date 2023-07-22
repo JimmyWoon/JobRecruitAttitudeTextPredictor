@@ -1,0 +1,66 @@
+{% extends 'Intro.html' %}
+{% block modal %}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {% if no_word_found %}
+                    {% set name = detail%}
+                    {% elif message == "As13#s12" %}
+                    {% set name = "Data upload successfully"%}
+
+                    {% endif %}
+
+                    {% if (name)|length > 25 %}
+                    {% set splitName = (name).split()%}
+                    {% set shortName = splitName[0][0:25] + "... ."%}
+                    {% else%}
+                    {% set shortName = name %}
+                    {% endif %}
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{shortName}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        {% if no_word_found%}
+                            {% if no_word_found == "no word found"%}
+                                <span style="color: red;">
+                                    Unable to extract text from the uploaded document
+                                </span>
+                            {% else %}
+                                <span style="color: red;">
+                                    {{no_word_found}}
+                                </span>
+                            {% endif %}
+                        {% elif message == "As13#s12" %}
+                            <span>
+                                Thank you for uploading your document. Would you like to modify the document? 
+                            </span>
+                            <br>
+
+                            <span style="color: red;">
+                                ** If you choose to proceed with modifications, the existing data will be deleted. **
+                            </span>
+                        {% endif %}                        
+                    </div>
+                    {% if message == "As13#s12" %}
+                        <div class="modal-footer">
+                            <a href="{{url_for('delete',candidate_id = candidate_id)}}"><button type="button" id="return_home_btn" class="btn btn-primary">Yes</button></a>
+                            <a href="{{url_for('home')}}"><button  id="downloadBtn" type="button" class="btn btn-secondary">No</button></a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script%}
+    <script>
+        $(document).ready(function(){
+            console.log("window is loaded")
+            $("#exampleModalCenter").modal("show")
+        })
+    </script>
+{% endblock %}

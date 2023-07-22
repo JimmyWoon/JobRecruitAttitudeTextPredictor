@@ -1,0 +1,45 @@
+install python & vscode
+https://www.youtube.com/watch?v=AKVRkB0fot0&list=PLiKXc9eZQ1Kd7XfcGjNlBh9uxyuHWuqHI&index=40
+
+create virtual environment
+https://www.youtube.com/watch?v=4jt9JPoIDpY&list=PLiKXc9eZQ1Kcujr1RkVA6yP2bedIuNF8Q&index=6
+
+Activate virtual environment
+env\Scripts\activate.bat
+
+if the virtual environment is restircted 
+https://www.youtube.com/watch?v=1L0l5CzFs-4&list=PLiKXc9eZQ1Kcujr1RkVA6yP2bedIuNF8Q&index=3
+
+copy file into the folder
+instance
+static
+templates
+uploads
+app.py
+latest.csv
+ResumeParser.py
+SVM.py
+
+pip install pandas
+pip install scikit-learn
+pip install scipy
+pip install numpy
+pip install SQLAlchemy
+pip install Flask-SQLAlchemy
+pip install flask
+pip install SpeechRecognition
+pip install moviepy
+pip install aspose-words
+pip install pdfminer.six
+pip install docx2txt
+pip install nltk
+pip install pandas
+pip install spacy
+pip install confusion-matrix
+pip install imbalanced-learn
+pip install spicy
+pip install Flask-Session
+pip install Flask-Mail
+
+
+run without debugging 

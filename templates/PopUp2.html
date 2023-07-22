@@ -1,0 +1,69 @@
+{% extends 'Home.html' %}
+{% block modal %}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {% if no_word_found %}
+                    {% set name = detail%}
+                    {% elif message == "As13#s12" %}
+                    {% set name = "Data upload successfully"%}
+                    {% else %}
+                    {% set name = 'Certificate'%}
+                    {% endif %}
+
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        {% if no_word_found%}
+                            <span style="color: red;">
+                                {{no_word_found}}
+                            </span>
+                        {% elif message == "As13#s12" %}
+                            <span>
+                                Thank you for uploading your document. Would you like to modify the document? 
+                            </span>
+                            <br>
+
+                            <span style="color: red;">
+                                ** If you choose to proceed with modifications, the existing data will be deleted. **
+                            </span>
+                        {% else %}
+                        <ul>
+                            {% for cert in detail %}
+                                <li><a href="{{ url_for('download_certificate', filename=cert.Name) }}">{{ cert.Name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        <br>
+                        
+                        {% endif %}                        
+                    </div>
+                    {% if no_word_found %}
+                    {% elif message == "As13#s12" %}
+                        <div class="modal-footer">
+                            <a href="{{url_for('delete',candidate_id = candidate_id)}}"><button type="button" id="return_home_btn" class="btn btn-primary">Yes</button></a>
+                            <a href="{{url_for('home')}}"><button  id="downloadBtn" type="button" class="btn btn-secondary">No</button></a>
+                        </div>
+                    {% else %}
+                        <div class="modal-footer">
+                            <!-- <a href="{{url_for('download',candidateID = detail._id)}}"><button type="button" id="downloadBtn" class="btn btn-secondary">Download file</button></a> -->
+                            <a href="{{url_for('home')}}"><button  id="return_home_btn" type="button" class="btn btn-primary">Return to main page</button></a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script%}
+    <script>
+        $(document).ready(function(){
+            console.log("window is loaded")
+            $("#exampleModalCenter").modal("show")
+        })
+    </script>
+{% endblock %}

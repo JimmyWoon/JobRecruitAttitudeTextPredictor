@@ -1,0 +1,87 @@
+{% extends 'Home.html' %}
+{% block modal %}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    {% if no_word_found %}
+                    {% set name = detail%}
+                    {% else %}
+                    {% set name = detail.Name%}
+                    {% endif %}
+
+                    {% if (name)|length > 25 %}
+                    {% set splitName = (name).split()%}
+                    {% set shortName = splitName[0][0:25] + "... ."%}
+                    {% else%}
+                    {% set shortName = name %}
+                    {% endif %}
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{shortName}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        {% if no_word_found%}
+                            {% if no_word_found == "no word found"%}
+                                <span style="color: red;">
+                                    Unable to extract text from the uploaded document
+                                </span>
+                            {% else %}
+                                <span style="color: red;">
+                                    {{no_word_found}}
+                                </span>
+                            {% endif %}
+                        {% else %}
+
+                        <span style="color: red;">
+                            ** Below are the potential personality and attitude predicted based on the job resume received. **
+                        </span>
+                        <br>
+                        <br>
+                        <ul>
+                            {% if detail.Att_Active == 1 %}<li>Active</li>{% endif%}
+                            {% if detail.Att_Agreeableness == 1 %}<li>Agreeableness</li>{% endif%}
+                            {% if detail.Att_Cautiousness == 1 %}<li>Cautiousness </li>{% endif%}
+                            {% if detail.Att_Compliant == 1 %}<li>Compliant</li>{% endif%}
+                            {% if detail.Att_Confidence == 1 %}<li>Confidence</li>{% endif%}
+                            {% if detail.Att_Conscientiousness == 1 %}<li>Conscientiousness</li>{% endif%}
+                            {% if detail.Att_Dominant == 1 %}<li>Dominant</li>{% endif%}
+                            {% if detail.Att_Emotionality == 1 %}<li>Emotionality</li>{% endif%}
+                            {% if detail.Att_Extroversion == 1 %}<li>Extroversion</li>{% endif%}
+                            {% if detail.Att_Hard_Working == 1 %}<li>Hard Working</li>{% endif%}
+                            {% if detail.Att_Honest == 1 %}<li>Honest</li>{% endif%}
+                            {% if detail.Att_Influecing == 1 %}<li>Influencing</li>{% endif%}
+                            {% if detail.Att_Innovative == 1 %}<li>Innovative</li>{% endif%}
+                            {% if detail.Att_Knowledge_sharing == 1 %}<li>Knowledge Sharing</li>{% endif%}
+                            {% if detail.Att_Leadership == 1 %}<li>Leadership</li>{% endif%}
+                            {% if detail.Att_Neuroticism == 1 %}<li>Neuroticism</li>{% endif%}
+                            {% if detail.Att_Openness == 1 %}<li>Openness</li>{% endif%}
+                            {% if detail.Att_Punctual == 1 %}<li>Punctual</li>{% endif%}
+                            {% if detail.Att_Responsible == 1 %}<li>Responsible</li>{% endif%}
+                            {% if detail.Att_Steady == 1 %}<li>Steady</li>{% endif%}
+                            {% if detail.Att_Teamwork == 1 %}<li>Teamwork</li>{% endif%}
+                        </ul>
+                        {% endif %}                        
+                    </div>
+                    {% if no_word_found  %}
+                    {% else %}
+                    <div class="modal-footer">
+                        <a href="{{url_for('download',candidateID = detail._id)}}"><button type="button" id="downloadBtn" class="btn btn-secondary">Download resume</button></a>
+                        <a href="{{url_for('home')}}"><button  id="return_home_btn" type="button" class="btn btn-primary">Return to Home page</button></a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script%}
+    <script>
+        $(document).ready(function(){
+            console.log("window is loaded")
+            $("#exampleModalCenter").modal("show")
+        })
+    </script>
+{% endblock %}
